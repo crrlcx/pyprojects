@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "gitlab_repo_group_sync"
+version = "0.1.0"
+description = "GitLab bulk sync group of repositories"
+authors = ["Carrol Cox <crrlcx@proton.me>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.9"
+python-gitlab = "^3.13.0"
+gitpython = "^3.1.31"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
