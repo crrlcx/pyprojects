@@ -2,13 +2,13 @@
 
 [[_TOC_]]
 
-This script is useful for automating the cloning of multiple repositories from GitLab,
-especially when dealing with a large number of repositories.
+This script is useful for automating the cloning of multiple repositories from GitLab,  
+especially when dealing with a large number of repositories.  
 Repositories will be cloned using their respective SSH links.
 
 ## Alternatives
 
-More powerfull and popelar alternatives:
+More powerful and popular alternatives:
 
 - written on Python [gitlabber](https://github.com/ezbz/gitlabber)
 - written on GoLang [ghorg](https://github.com/gabrie30/ghorg)
