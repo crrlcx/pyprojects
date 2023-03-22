@@ -21,10 +21,12 @@ import gitlab
 from git import Repo, GitCommandError, InvalidGitRepositoryError
 
 
-def auth_with_gitlab(gl_config_section: str = None, gl_url: str = None, gl_token: str = None) -> gitlab.Gitlab:
+def auth_with_gitlab(
+    gl_config_section: str = None, gl_url: str = None, gl_token: str = None
+) -> gitlab.Gitlab:
     """
     This function takes three arguments gl_config_section, gl_url and gl_token,
-    which are the name of the config section in the ~/.python-gitlab.cfg file, 
+    which are the name of the config section in the ~/.python-gitlab.cfg file,
     the GitLab URL and access token respectively.
     It uses the gitlab module to authenticate with GitLab
     and returns the Gitlab object.
