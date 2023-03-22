@@ -21,38 +21,26 @@ import gitlab
 from git import Repo, GitCommandError, InvalidGitRepositoryError
 
 
-def auth_with_gitlab_credentials(gl_url: str, gl_token: str) -> gitlab.Gitlab:
+def auth_with_gitlab(gl_config_section: str = None, gl_url: str = None, gl_token: str = None) -> gitlab.Gitlab:
     """
-    This function takes two arguments gl_url and gl_token,
-    which are the GitLab URL and access token respectively.
+    This function takes three arguments gl_config_section, gl_url and gl_token,
+    which are the name of the config section in the ~/.python-gitlab.cfg file, 
+    the GitLab URL and access token respectively.
     It uses the gitlab module to authenticate with GitLab
     and returns the Gitlab object.
     """
     try:
-        gl = gitlab.Gitlab(gl_url, private_token=gl_token)
-        gl.auth()
-        return gl
-    except gitlab.exceptions.GitlabAuthenticationError as _err:
-        print(f"Failed to authenticate with GitLab with credentials: {_err}")
-        sys.exit(1)
-
-
-def auth_with_gitlab_config(gl_config_section: str) -> gitlab.Gitlab:
-    """
-    This function takes one argument gl_config_section,
-    which is the name of the config section in the ~/.python-gitlab.cfg file.
-    It uses the gitlab module to authenticate with GitLab
-    and returns the Gitlab object.
-    """
-    try:
-        gl = gitlab.Gitlab.from_config(gl_config_section)
+        if gl_config_section:
+            gl = gitlab.Gitlab.from_config(gl_config_section)
+        else:
+            gl = gitlab.Gitlab(gl_url, private_token=gl_token)
         gl.auth()
         return gl
     except (
         gitlab.exceptions.GitlabAuthenticationError,
         gitlab.config.GitlabDataError,
     ) as _err:
-        print(f"Failed to authenticate with GitLab with config: {_err}")
+        print(f"Failed to authenticate with GitLab: {_err}")
         sys.exit(1)
 
 
@@ -124,13 +112,9 @@ if __name__ == "__main__":
         "GL_ROOT_PATH environment variable not set.\nPlease enter the group, like 'namespace/projects': "
     )
     gl_config_section = os.environ.get("GL_CONFIG_SECTION") or None
-
-    if not gl_config_section:
-        gl_url = os.environ.get("GL_URL") or input("GitLab url: ")
-        gl_token = os.environ.get("GL_TOKEN") or input("GitLab token: ")
-        gl = auth_with_gitlab_credentials(gl_url, gl_token)
-    else:
-        gl = auth_with_gitlab_config(gl_config_section)
+    gl_url = os.environ.get("GL_URL") or input("GitLab url: ")
+    gl_token = os.environ.get("GL_TOKEN") or input("GitLab token: ")
+    gl = auth_with_gitlab(gl_config_section, gl_url, gl_token)
 
     try:
         root_grp = get_root_group_path(gl, gl_root_path)
