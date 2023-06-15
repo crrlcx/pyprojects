@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "getlatest"
+version = "0.1.0"
+description = "This script downloads the latest version of binaries from Github and updates them."
+authors = ["Carrol Cox <crrlcx@proton.me>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.9"
+aria2p = "^0.11.3"
+semver = "^3.0.1"
+pyyaml = "^6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
